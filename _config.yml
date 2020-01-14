@@ -19,7 +19,7 @@ tagline:             "All roads lead to data."
 # Markdown enabled, but don't use more than one paragraph (enforced by `>`)
 description:         >
   Data Scientist의 길..
-og_image:           /assets/img/KakaoTalk_20200110_162846740.jpg
+
 
 
 # This should be the same author as first entry in `_data/authors.yml`
