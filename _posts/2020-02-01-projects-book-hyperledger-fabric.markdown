@@ -3,7 +3,7 @@ layout: post
 title:  "멀티캠퍼스 자연어처리 인공지능 과정"
 subtitle:   "하이퍼레저 블록체인 개발"
 categories: projects
-tags: review blockchain
+tags: projects 
 comments: true
 header-img: img/review/2019-04-02-review-book-hyperledger-fabric-2-Cover.png
 ---
