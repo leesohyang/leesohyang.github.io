@@ -2,8 +2,8 @@
 layout: post
 title:  "[멀티캠퍼스] 자연어처리 인공지능 기업분석 과정"
 subtitle:   "reference"
-categories: envOps
-tags: envOps
+categories: envops
+tags: envops
 comments: true
 ---
 
