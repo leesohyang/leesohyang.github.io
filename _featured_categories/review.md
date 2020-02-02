@@ -1,10 +1,10 @@
 ---
 layout: list
-title: Review
-slug: review
+title: Algorithm
+slug: algorithm
 menu: true
 submenu: false
 order: 6
 description: >
-  주로 IT 서적 및 제품에 관련된 리뷰.
+  알고리즘 풀이
 ---

@@ -6,5 +6,5 @@ menu: true
 submenu: true
 order: 3
 description: >
-  개발에 관련된 모든 것.  
+  프로젝트 정리
 ---
