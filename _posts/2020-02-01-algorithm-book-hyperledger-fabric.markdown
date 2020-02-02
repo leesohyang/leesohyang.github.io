@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "프로그래머스 DFS 타켓 넘버  문제 "
+title:  "[프로그래머스] DFS 타켓 넘버  문제 "
 subtitle:   "프로그래머스 DFS 타켓 넘버  문제"
 categories: algorithm
 tags: algorithm 알고리즘 단어변환 DFS 프로그래머스 
@@ -8,7 +8,7 @@ comments: true
 ---
 
 
-## 프로그래머스 단어변환 문제(DFS)
+## 프로그래머스 타겟 넘버 문제(DFS)
 
 
 

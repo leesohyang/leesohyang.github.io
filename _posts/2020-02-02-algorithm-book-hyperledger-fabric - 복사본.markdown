@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "프로그래머스 DFS 단어변환 문제 "
+title:  "[프로그래머스] DFS 단어변환 문제 "
 subtitle:   "프로그래머스 DFS 단어변환 문제"
 categories: algorithm
 tags: algorithm 알고리즘 단어변환 DFS 프로그래머스 
