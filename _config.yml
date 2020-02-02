@@ -12,13 +12,13 @@ url:                 https://leesohyang.github.io
 # Set to '/<reponame>' when using the `gh-pages` branch of a repository
 baseurl:             ""
 
-# A very short description of your page
-tagline:             "All roads lead to data."
+# # A very short description of your page
+# tagline:             "All roads lead to data."
 
 # A short description of the page, used in the sidebar and as fallback for the meta description tag.
 # Markdown enabled, but don't use more than one paragraph (enforced by `>`)
 description:         >
-  Data Scientist의 길..
+ 머신러닝, 딥러닝, 알고리즘
 
 
 
@@ -50,10 +50,10 @@ google_analytics:    UA-137374202-1
 
 # Setting a disqus shortname will enable the comment section on pages with `comments: true` in the front matter
 disqus: True
-disqus_shortname:    theorydb
+disqus_shortname:    leesohyang
 
 # This text will appear in the footer of every page. Markdown enabled.
-copyright:           '&copy; 2019.04. by theorydb'
+copyright:           '&copy; by leesohyang'
 
 # Format of the permalinks
 permalink:           pretty
