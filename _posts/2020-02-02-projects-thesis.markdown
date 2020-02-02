@@ -35,6 +35,10 @@ CNN layer와 LSTM layer가 연결되는 모습은 다음과 같습니다. 위 �
 
 데이터는 [NSMC](https://github.com/e9t/nsmc) 데이터셋을 사용하였습니다. 각각의 영화 리뷰 별점이 9-10점이면 긍정으로, 1~4점이면 부정으로 labeling 하는 코드가 포함되어있습니다. 저는 여기에 중립의 label을 추가로 수집하여 총 세개의 label을 분류할 수 있도록 하였습니다.    
 
-결과는 label이 긍정과 부정일때는 86%, 중립까지 포함하여 세개일때는 70%로, 이는 CNN단일모델과 비교하였을때 각각 약 1%, 2% 가량 높은 성능을 보였습니다. 모델이 복잡해진것에 비해서 딱히 눈에 띄지 않는 성능을 보여주었는데요, 이러한 결과를 분석해보기 위해 TN, FN, TP, FP 데이터를 직접 확인해보았습니다. 
-(TN=True Negative, FN=False Negative, TP=True Positive, FP=False Positive)-confusion matrix
+결과는 label이 긍정과 부정일때는 86%, 중립까지 포함하여 세개일때는 70%로, 이는 CNN단일모델과 비교하였을때 각각 약 1%, 2% 가량 높은 성능을 보였습니다. 모델이 복잡해진것에 비해서 딱히 눈에 띄지 않는 성과를 보여주었는데요, 이러한 결과를 분석해보기 위해 모델이 분류하지 못한 FN, FP 데이터를 직접 확인해보았습니다. 
+(FN=False Negative, FP=False Positive)-confusion matrix
 
+![screenshot2](https://leesohyang.github.io/assets/img/post_img/thesis2.png)
+
+LIME에서 영감을 받아 모델의 분류 근거를 시각화하는 코드를 작성하였습니다. TP, TN, FP, FN 네가지 경우에 대한 시각화 한 결과는 다음과 같습니다. 
+![screenshot3](https://leesohyang.github.io/assets/img/post_img/TP.png){: width="300" height="300"}
