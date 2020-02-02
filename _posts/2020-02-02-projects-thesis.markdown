@@ -38,7 +38,7 @@ CNN layer와 LSTM layer가 연결되는 모습은 다음과 같습니다. 위 �
 결과는 label이 긍정과 부정일때는 86%, 중립까지 포함하여 세개일때는 70%로, 이는 CNN단일모델과 비교하였을때 각각 약 1%, 2% 가량 높은 성능을 보였습니다. 모델이 복잡해진것에 비해서 딱히 눈에 띄지 않는 성과를 보여주었는데요, 이러한 결과를 분석해보기 위해 모델이 분류하지 못한 FN, FP 데이터를 직접 확인해보았습니다. 
 (FN=False Negative, FP=False Positive)-confusion matrix
 
-![screenshot2](https://leesohyang.github.io/assets/img/post_img/thesis2.png)
+![screenshot2](https://leesohyang.github.io/assets/img/post_img/thesis2.PNG)
 
 LIME에서 영감을 받아 모델의 분류 근거를 시각화하는 코드를 작성하였습니다. TP, TN, FP, FN 네가지 경우에 대한 시각화 한 결과는 다음과 같습니다. 
-![screenshot3](https://leesohyang.github.io/assets/img/post_img/TP.png){: width="300" height="300"}
+![screenshot3](https://leesohyang.github.io/assets/img/post_img/TP.PNG){: width="300" height="300"}
