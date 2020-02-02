@@ -59,7 +59,6 @@ comments: true
 
 '''
 
-![screenshot](img/projects/KakaoTalk_20200202_171035151.png)
+![screenshot](./img/projects/KakaoTalk_20200202_171035151.png)
 
 
-[한빛미디어 바로가기](http://www.hanbit.co.kr/)
