@@ -29,7 +29,7 @@ comments: true
 [“A C-LSTM Neural Network for Text Classification.” , 2015 `](https://arxiv.org/abs/1511.08630)논문을 참고하여 CNN과 LSTM을 결합하여 한국어 영화리뷰 감성분석 모델을 연구, 구현하였습니다. 
 
 CNN layer와 LSTM layer가 연결되는 모습은 다음과 같습니다. 위 논문에 따르면, LSTM의 입력의 sequence를 보장하기 위해 추출된 feature에 대한 maxpool은 수행하지 않습니다. 아래 그림의 빨간색 블록이 단어 "The"라고 가정하면, LSTM의 첫번째 입력은 CNN으로부터 추출된 "The"에 대한 feature값만을 합한 벡터가 됩니다.  
-![screenshot](https://leesohyang.github.io/assets/img/post_img/thesis.png)
+![screenshot](https://leesohyang.github.io/assets/img/post_img/thesis1.png)
 
 모델 구현에 참고한 코드는 [다음](https://github.com/zackhy/TextClassification)과 같습니다. LSTM layer는 총 두개가 쌓여 사용되었습니다.
 
