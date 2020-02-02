@@ -59,6 +59,8 @@ comments: true
 
 '''
 
-![screenshot](./img/projects/KakaoTalk_20200202_171035151.png)
+아래는 테스트 화면입니다. 
+
+![screenshot](https://leesohyang.github.io/assets/img/projects/KakaoTalk_20200202_171035151.png)
 
 
