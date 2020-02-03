@@ -27,7 +27,7 @@ bert를 처음 접하는데 [논문](https://arxiv.org/abs/1706.03762)과 [게�
 ![screenshot](https://leesohyang.github.io/assets/img/post_img/bert2.jpg)
 *BERT는 양방향, OpenAI GPT는 단방향, ELMO는 단방향이다.*
 
-BERT는 결국 Tranformer를 이용하여 사전 학습한 언어모델입니다. Tranformer가 뭔지 알기위해서는 우선 Attention mechanism에 대하여 알아야 하는데요, attention은 모든 sequence를 고려하면서 정보처리를 하지않고, 중요한 feature를 더욱 중요하게 고려하는 것을 모티브로 합니다. 작동원리는 다음과 같습니다. 
+BERT는 결국 Tranformer를 기반으로 하여 사전 학습한 언어모델입니다. Tranformer가 뭔지 알기위해서는 우선 Attention mechanism에 대하여 알아야 하는데요, attention은 모든 sequence를 고려하면서 정보처리를 하지않고, 중요한 feature를 더욱 중요하게 고려하는 것을 모티브로 합니다. 작동원리는 다음과 같습니다. 
 ![screenshot2](https://leesohyang.github.io/assets/img/post_img/attention.PNG)
 *Attention 모델 작동원리*
 1. 기존 RNN모델에서 시작-파란색네모박스 
@@ -35,14 +35,21 @@ BERT는 결국 Tranformer를 이용하여 사전 학습한 언어모델입니다
 3. 2번 layer의 output을 각 RNN셀의 score로 결정합니다. 
 4. 출력된 score에 softmax를 취한 값이 해당 셀의 Attention weight가 됩니다. 
 
-Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다.
+Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다. 서로다른 인코더와 디코더가 6개씩 포진하고 있으며, 하나의 인코더 안에 self-attention과 feed forward 신경망이 들어있습니다. 인코더에서는 각각이 512사이즈의 벡터로 단어를 임베딩(Token embedding)하여 신경망으로 전달합니다. BERT는 여기에 Position embedding 과 Segment embedding을 추가하여 총 3개의 임베딩을 합산한 결과를 취합니다. 이를 코드로 나타내면 다음과 같습니다.
+
+'''
+	embedding = self.token_embed(x)+self.position_embed(pos)+self.segment_embed(seg)
+'''
+
+Position embedding은 각 토큰의 위치정보를 담으며, Segment embedding은 첫번째문장과 두번째 문장을 분류하는 역할을 합니다. 
+
+![screenshot4](https://leesohyang.github.io/assets/img/post_img/selfattention1.PNG)
 
 ![screenshot3](https://leesohyang.github.io/assets/img/post_img/selfattention.PNG) 
 *Self-Attention 모델 작동원리*
 
-BERT의 input들은 세가지로 임베딩되어 표현됩니다.
-1)Token embedding
-2)Segment embedding
-3)Position embedding
+
+## Finetuning BERT
+---
 
 BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋에대한 파인튜닝(fine-tuning)을 수행하였습니다. 
