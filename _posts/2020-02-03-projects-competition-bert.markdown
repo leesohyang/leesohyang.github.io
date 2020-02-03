@@ -14,6 +14,7 @@ header-img: img/post_img/bert.jpg
 - 목차
 	- [프로젝트의 시작](#프로젝트의-시작)
 	- [BERT란 무엇인가?](#BERT란-무엇인가?) 
+	- [Finetuning](#Finetuning)
 
 ## 프로젝트의 시작  
 ---
@@ -35,7 +36,16 @@ BERT는 결국 Tranformer를 기반으로 하여 사전 학습한 언어모델�
 3. 2번 layer의 output을 각 RNN셀의 score로 결정합니다. 
 4. 출력된 score에 softmax를 취한 값이 해당 셀의 Attention weight가 됩니다. 
 
-Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다. 서로다른 인코더와 디코더가 6개씩 포진하고 있으며, 하나의 인코더 안에 self-attention과 feed forward 신경망이 들어있습니다. 인코더에서는 각각이 512사이즈의 벡터로 단어를 임베딩(Token embedding)하여 신경망으로 전달합니다. BERT는 여기에 Position embedding 과 Segment embedding을 추가하여 총 3개의 임베딩을 합산한 결과를 취합니다. 이를 코드로 나타내면 다음과 같습니다.
+Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다. 서로다른 인코더와 디코더가 6개씩 포진하고 있으며, 하나의 인코더 안에 self-attention과 feed forward 신경망이 들어있습니다. 
+
+![screenshot4](https://leesohyang.github.io/assets/img/post_img/selfattention1.PNG)
+*Self-Attention 모델 작동원리 1*
+
+![screenshot3](https://leesohyang.github.io/assets/img/post_img/selfattention.PNG) 
+*Self-Attention 모델 작동원리 2*
+
+
+인코더에서는 각각이 512사이즈의 벡터로 단어를 임베딩(Token embedding)하여 신경망으로 전달합니다. BERT는 여기에 Position embedding 과 Segment embedding을 추가하여 총 3개의 임베딩을 합산한 결과를 취합니다. Position embedding은 각 토큰의 위치정보를 담으며, Segment embedding은 첫번째문장과 두번째 문장을 분류하는 역할을 합니다. 이를 코드로 나타내면 다음과 같습니다.
 
 '''c
 
@@ -43,15 +53,11 @@ Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 �
 
 '''
 
-Position embedding은 각 토큰의 위치정보를 담으며, Segment embedding은 첫번째문장과 두번째 문장을 분류하는 역할을 합니다. 
 
-![screenshot4](https://leesohyang.github.io/assets/img/post_img/selfattention1.PNG)
-
-![screenshot3](https://leesohyang.github.io/assets/img/post_img/selfattention.PNG) 
-*Self-Attention 모델 작동원리*
 
 
 ## Finetuning
 ---
+위와 같이 문맥적으로 표현된 단어토큰의 값들을 가지고 있는 pre-trained Bert모델을 NLP task에 사용하기 위해서는 모델 최상위층에 1개의 classification layer를 부착하면 됩니다. 
 
 BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋에대한 파인튜닝(fine-tuning)을 수행하였습니다. 
