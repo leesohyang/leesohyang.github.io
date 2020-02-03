@@ -19,7 +19,7 @@ header-img: img/post_img/bert.jpg
 ## 프로젝트의 시작  
 ---
 
-이 프로젝트는 2019년 7월 멀티캠퍼스 자연어처리 과정 시작과 동시에 처음보는 사람들과 팀을 꾸려서 수행하게 되었는데요, 비록 모델의 알려진 성능만큼 나오지 못하였고 수상도 하지 못하였지만 이때 여러 자료들을 찾아보고, 관련 컨퍼런스를 다니며 공부했던 것이 큰 도움이 되었습니다.  
+이 프로젝트는 2019년 7월 멀티캠퍼스 자연어처리 과정 시작과 동시에 사람들과 팀을 꾸려서 수행하게 되었는데요, 비록 모델의 알려진 성능만큼 나오지 못하였고 수상도 하지 못하였지만 이때 여러 자료들을 찾아보고, 관련 컨퍼런스를 다니며 공부했던 것이 큰 도움이 되었습니다.  
 
 ## BERT란 무엇인가?
 ---
@@ -36,7 +36,7 @@ BERT는 결국 Tranformer를 기반으로 하여 사전 학습한 언어모델�
 3. 2번 layer의 output을 각 RNN셀의 score로 결정합니다. 
 4. 출력된 score에 softmax를 취한 값이 해당 셀의 Attention weight가 됩니다. 
 
-Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다. 서로다른 인코더와 디코더가 6개씩 포진하고 있으며, 하나의 인코더 안에 self-attention과 feed forward 신경망이 들어있습니다. 
+Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다. 서로다른 인코더와 디코더가 6개씩 포진하고 있으며, 하나의 인코더 안에 self-attention과 feed forward 신경망이 들어있습니다. 트랜스포머의 학습 방법론은 여기서 다루지 않겠습니다. 
 
 ![screenshot4](https://leesohyang.github.io/assets/img/post_img/selfattention1.PNG)
 *Self-Attention 모델 작동원리 1*
@@ -59,5 +59,6 @@ Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 �
 ## Finetuning
 ---
 위와 같이 문맥적으로 표현된 단어토큰의 값들을 가지고 있는 pre-trained Bert모델을 NLP task에 사용하기 위해서는 모델 최상위층에 1개의 classification layer를 부착하면 됩니다. 
+![screenshot4](https://leesohyang.github.io/assets/img/post_img/finetuning.png) 
 
 BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋에대한 파인튜닝(fine-tuning)을 수행하였습니다. 
