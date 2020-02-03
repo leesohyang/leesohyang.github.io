@@ -37,8 +37,10 @@ BERT는 결국 Tranformer를 기반으로 하여 사전 학습한 언어모델�
 
 Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다. 서로다른 인코더와 디코더가 6개씩 포진하고 있으며, 하나의 인코더 안에 self-attention과 feed forward 신경망이 들어있습니다. 인코더에서는 각각이 512사이즈의 벡터로 단어를 임베딩(Token embedding)하여 신경망으로 전달합니다. BERT는 여기에 Position embedding 과 Segment embedding을 추가하여 총 3개의 임베딩을 합산한 결과를 취합니다. 이를 코드로 나타내면 다음과 같습니다.
 
-'''
+'''c
+
 	embedding = self.token_embed(x)+self.position_embed(pos)+self.segment_embed(seg)
+
 '''
 
 Position embedding은 각 토큰의 위치정보를 담으며, Segment embedding은 첫번째문장과 두번째 문장을 분류하는 역할을 합니다. 
@@ -49,7 +51,7 @@ Position embedding은 각 토큰의 위치정보를 담으며, Segment embedding
 *Self-Attention 모델 작동원리*
 
 
-## Finetuning BERT
+## Finetuning
 ---
 
 BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋에대한 파인튜닝(fine-tuning)을 수행하였습니다. 
