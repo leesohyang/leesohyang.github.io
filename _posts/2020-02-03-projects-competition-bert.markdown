@@ -22,5 +22,27 @@ header-img: img/post_img/bert.jpg
 
 ## BERT란 무엇인가?
 ---
-bert를 처음 접하는데 [논문](https://arxiv.org/abs/1706.03762)과 [게시글](http://docs.likejazz.com/bert/)에 큰 도움을 받았습니다. BERT란 2018년 11월 구글에서 공개한 최첨단 자연어처리 딥러닝 모델이며, 자연어처리 테스크를 비지도 학습으로 양방향 pretraining을 수행하는 첫 시스템입니다. 
+bert를 처음 접하는데 [논문](https://arxiv.org/abs/1706.03762)과 [게시글](http://docs.likejazz.com/bert/)에 큰 도움을 받았습니다. BERT란 2018년 11월 구글에서 공개한 최첨단 자연어처리 딥러닝 모델이며, 자연어처리 테스크를 비지도 학습으로 양방향 pretraining을 수행하는 첫 시스템입니다. 단어하나에 대한 왼쪽과 오른쪽 양쪽의 문맥을 deep 하게 표현하여 문장의 맥락을 학습시키게 됩니다.[Transformer]()
+
 ![screenshot](https://leesohyang.github.io/assets/img/post_img/bert2.jpg)
+*BERT는 양방향, OpenAI GPT는 단방향, ELMO는 단방향이다.*
+
+BERT는 결국 Tranformer를 이용하여 사전 학습한 언어모델입니다. Tranformer가 뭔지 알기위해서는 우선 Attention mechanism에 대하여 알아야 하는데요, attention은 모든 sequence를 고려하면서 정보처리를 하지않고, 중요한 feature를 더욱 중요하게 고려하는 것을 모티브로 합니다. 작동원리는 다음과 같습니다. 
+![screenshot2](https://leesohyang.github.io/assets/img/post_img/attention.PNG)
+*Attention 모델 작동원리*
+1. 기존 RNN모델에서 시작-파란색네모박스 
+2. RNN셀의 각 output을 입력으로 하는 Feed forward fully connected layer
+3. 2번 layer의 output을 각 RNN셀의 score로 결정합니다. 
+4. 출력된 score에 softmax를 취한 값이 해당 셀의 Attention weight가 됩니다. 
+
+Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 사용한 모델입니다.
+
+![screenshot3](https://leesohyang.github.io/assets/img/post_img/selfattention.PNG) 
+*Self-Attention 모델 작동원리*
+
+BERT의 input들은 세가지로 임베딩되어 표현됩니다.
+1)Token embedding
+2)Segment embedding
+3)Position embedding
+
+BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋에대한 파인튜닝(fine-tuning)을 수행하였습니다. 
