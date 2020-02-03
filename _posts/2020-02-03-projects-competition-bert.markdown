@@ -15,6 +15,7 @@ header-img: img/post_img/bert.jpg
 	- [프로젝트의 시작](#프로젝트의-시작)
 	- [BERT란 무엇인가?](#BERT란-무엇인가?) 
 	- [Finetuning](#Finetuning)
+	- [결과](#결과)
 
 ## 프로젝트의 시작  
 ---
@@ -61,4 +62,55 @@ Transformer는 이 attention mechanism에 RNN을 제거한 self-attention 을 �
 위와 같이 문맥적으로 표현된 단어토큰의 값들을 가지고 있는 pre-trained Bert모델을 NLP task에 사용하기 위해서는 모델 최상위층에 1개의 classification layer를 부착하면 됩니다. 
 ![screenshot4](https://leesohyang.github.io/assets/img/post_img/finetuning.png) 
 
-BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋에대한 파인튜닝(fine-tuning)을 수행하였습니다. 
+BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습니다. 저희는 여기에 개체명 인식 테스크를 수행하도록 하기 위해 개체명 태깅된 데이터셋(ETRI 엑소브레인 말뭉치)에 대한 파인튜닝(fine-tuning)을 하였습니다. 아래 코드는 개체명(Ner) 태깅을 학습시킬 수 있는 파인튜닝 [소스](https://github.com/kyzhouhzau/BERT-NER)의 일부입니다. 
+
+    
+	```python
+	
+	class NerProcessor(DataProcessor):
+	    def get_train_examples(self, data_dir):
+	        return self._create_example(
+	            self._read_data(os.path.join(data_dir, "train.txt")), "train"
+	        )
+	
+	    def get_dev_examples(self, data_dir):
+	        return self._create_example(
+	            self._read_data(os.path.join(data_dir, "dev.txt")), "dev"
+	        )
+	
+	    def get_test_examples(self,data_dir):
+	        return self._create_example(
+	            self._read_data(os.path.join(data_dir, "test.txt")), "test"
+	        )
+	
+	
+	    def get_labels(self):
+	        """
+	        here "X" used to represent "##eer","##soo" and so on!
+	        "[PAD]" for padding
+	        :return:
+	        """
+	        return ["[PAD]", "-", 
+	                "PS_B", "PS_I", "LC_B", "LC_I", "OG_B", "OG_I", "DT_B", "DT_I", "TI_B", "TI_I", 
+	                "X","[CLS]","[SEP]"]
+	
+	    def _create_example(self, lines, set_type):
+	        examples = []
+	        for (i, line) in enumerate(lines):
+	            guid = "%s-%s" % (set_type, i)
+	            texts = tokenization.convert_to_unicode(line[1])
+	            labels = tokenization.convert_to_unicode(line[0])
+	            examples.append(InputExample(guid=guid, text=texts, label=labels))
+	        return examples
+	
+	'''
+
+다음은 엑소브레인 말뭉치를 형태소 분석하여 개체명을 붙인 데이터의 예시입니다. 개체명 label은 BIO(B:begin, I:intermediate) 태깅을 사용하였습니다. 
+
+![screenshot5](https://leesohyang.github.io/assets/img/post_img/ner.PNG)
+
+
+## 결과는...
+---
+
+6만 문장을 학습한 결과는 약 76%였습니다. 이는 BERT 모델의 알려진 성능에 비하면 터무니없이 낮은 값이였는데요, 저희는 이것이 ETRI의 tokenizer와 파인튜닝 코드의 호환성 문제일 것이라고 결론을 내렸습니다. 
