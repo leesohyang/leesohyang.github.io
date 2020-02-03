@@ -3,7 +3,7 @@ layout: post
 title:  "bert를 사용한 한국어 개체명 인식기"
 subtitle:   "국어정보처리"
 categories: projects
-tags: projects competition bert
+tags: projects competition
 comments: true
 header-img: img/post_img/bert.jpg
 ---
@@ -19,7 +19,8 @@ header-img: img/post_img/bert.jpg
 
 이 프로젝트는 2019년 7월 멀티캠퍼스 자연어처리 과정 시작과 동시에 처음보는 사람들과 팀을 꾸려서 수행하게 되었는데요, 비록 모델의 알려진 성능만큼 나오지 못하였고 수상도 하지 못하였지만 이때 공부했던 것이 큰 도움이 되었습니다.  
 
-##BERT란 무엇인가?
+## BERT란 무엇인가?
 ---
 제가 이 모델을 한번 사용해보려고 여러 컨퍼런스를 다녀보았는데, 이미 이 모델을 사용한  많은 변형과 발전이 이루어지고 있더라구요. 모델을 프리트레이닝 시키는데 소모되는 자원과 시간을 듣고 깜짝 놀랐던 기억이 있습니다. 
 
+bert를 처음 접하는데 [논문](https://arxiv.org/abs/1706.03762)과 [게시글](http://docs.likejazz.com/bert/)에 큰 도움을 받았습니다. 
