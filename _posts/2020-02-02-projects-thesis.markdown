@@ -41,4 +41,4 @@ CNN layer와 LSTM layer가 연결되는 모습은 다음과 같습니다. 위 �
 ![screenshot2](https://leesohyang.github.io/assets/img/post_img/thesis2.PNG)
 
 LIME에서 영감을 받아 모델의 분류 근거를 시각화하는 코드를 작성하였습니다. TP, TN, FP, FN 네가지 경우에 대한 시각화 한 결과는 다음과 같습니다. 
-![screenshot3](https://leesohyang.github.io/assets/img/post_img/4.png)
+![screenshot3](https://leesohyang.github.io/assets/img/post_img/4.png){: width="500" height="500"}
