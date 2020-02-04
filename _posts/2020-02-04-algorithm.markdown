@@ -54,8 +54,3 @@ DFS에서 다음 항공권을 찾지 못하면 체크를 풀면서 돌아오되 
 	}
     '''
 
-아래는 테스트 화면입니다. 
-
-![screenshot](https://leesohyang.github.io/assets/img/projects/KakaoTalk_20200202_171035151.png)
-
-
