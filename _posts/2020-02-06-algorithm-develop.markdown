@@ -1,56 +1,55 @@
 ---
 layout: post
-title:  "[프로그래머스] 기능개발"
-subtitle:   "프로그래머스 기능개발"
+title:  "[삼성 SW 역량테스트] 휴가 문제"
+subtitle:   "[삼성 SW 역량테스트] 휴가 문제"
 categories: algorithm
 tags: algorithm 알고리즘 
 comments: true
 ---
 
 
-## 프로그래머스 기능개발 
+## 문제 
 ---
+![screenshot](https://leesohyang.github.io/assets/img/post_img/vacation.PNG)
 
-굳이 queue를 쓸 필요는 없었던 것 같다. 
+## 코드
+---
+DFS(L+1, sum); <-- 여기에 else를 붙였다가 한참 해맸다 ㅠ.ㅠ
+앞의 재귀가 끝난 후 무조건 돌아와서 수행되어야 하는 부분(L+1일 째부터 일 하는 경우)이므로 else를 붙이면 안됨... 
 
 
     '''c
-
-	#include <string>
-	#include <vector>
-	#include <queue>
-	
+	#include<stdio.h>
+	#include<algorithm>
+	#include<queue>
+	#include<vector>
 	using namespace std;
+	int n, minx=-2147000000;
+	vector<pair<int, int> > m[20];
+	void DFS(int L, int sum){
+		int i;
+		if(L==n+1){
+			if(sum>minx) minx=sum;
+		}
+		else {	
+			if(L+m[L][0].first<=n+1) DFS(L+m[L][0].first, sum+m[L][0].second);
+			DFS(L+1, sum); //else가 붙냐 안붙냐... 무조건 해야되니까.  
+	}
+		
+		
 	
-	vector<int> solution(vector<int> progresses, vector<int> speeds) {
-	    vector<int> answer;
-	    int x;
-	    queue<int> Q;
-	    int i, j, cnt=1;
-	    for(i=0;i<progresses.size();i++){
-	        if((100-progresses[i])%speeds[i]!=0){
-	             Q.push((100-progresses[i])/speeds[i]+1);
-	        }else Q.push((100-progresses[i])/speeds[i]);
-	    }
-	    while(!Q.empty()){
-	        x=Q.front();
-	        Q.pop();
-	        while(1){
-	            if(Q.empty()){
-	                answer.push_back(cnt);
-	                break;
-	            }
-	            if(Q.front()<=x){
-	                Q.pop();
-	                cnt++;
-	            }else{
-	                answer.push_back(cnt);
-	                cnt=1;
-	                break;
-	            }
-	        }
-	    }
-	    return answer;
+	}
+	int main(){
+		freopen("input.txt", "rt", stdin);
+		int i, a, b;
+		scanf("%d", &n);
+		for(i=1;i<=n;i++){
+			scanf("%d %d", &a, &b);
+			m[i].push_back(make_pair(a, b));
+		}
+		DFS(1, 0);
+		printf("%d", minx);
+		return 0;
 	}
     '''
 
