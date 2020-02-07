@@ -1,10 +1,10 @@
 ---
 layout: list
-title: Projects
-slug: projects
+title: Review
+slug: review
 menu: true
 submenu: true
-order: 3
+order: 4
 description: >
-  프로젝트 정리
+  코딩테스트 리뷰
 ---

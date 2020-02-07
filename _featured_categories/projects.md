@@ -4,7 +4,7 @@ title: Projects
 slug: projects
 menu: true
 submenu: true
-order: 3
+order: 2
 description: >
   프로젝트 정리
 ---
