@@ -1,7 +1,7 @@
 ---
 layout: tag-blog
-title: Competition
-slug: competition
+title: Team
+slug: team
 category: projects
 menu: false
 order: 1
