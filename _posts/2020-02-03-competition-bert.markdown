@@ -2,8 +2,8 @@
 layout: post
 title:  "[2019 국어정보처리 경진대회]bert를 사용한 한국어 개체명 인식기"
 subtitle:   "국어정보처리"
-categories: projects
-tags: projects competition
+categories: competition
+tags: competition
 comments: true
 header-img: img/post_img/bert.jpg
 ---

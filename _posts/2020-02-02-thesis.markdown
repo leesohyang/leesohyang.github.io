@@ -2,8 +2,8 @@
 layout: post
 title:  "[학위논문]C-LSTM을 사용한 한국어 감성분석"
 subtitle:   "학위논문"
-categories: projects
-tags: projects thesis
+categories: thesis
+tags: thesis
 comments: true
 ---
 
