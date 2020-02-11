@@ -2,8 +2,8 @@
 layout: post
 title:  "위상정렬"
 subtitle:   "위상정렬"
-categories: algorithm
-tags: algorithm 알고리즘 
+categories: algorithm language
+tags: algorithm language C++
 comments: true
 ---
 

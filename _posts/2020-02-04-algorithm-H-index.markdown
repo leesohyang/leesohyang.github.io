@@ -2,8 +2,8 @@
 layout: post
 title:  "[프로그래머스] H-Index"
 subtitle:   "프로그래머스 H-Index"
-categories: algorithm
-tags: algorithm 알고리즘 
+categories: algorithm language
+tags: algorithm language C++ 
 comments: true
 ---
 

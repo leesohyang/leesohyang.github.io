@@ -2,8 +2,8 @@
 layout: post
 title:  "[프로그래머스] 가장 큰 수"
 subtitle:   "프로그래머스 가장 큰 수"
-categories: algorithm
-tags: algorithm 알고리즘 
+categories: algorithm language
+tags: algorithm language C++
 comments: true
 ---
 
