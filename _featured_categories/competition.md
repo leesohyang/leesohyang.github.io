@@ -1,10 +1,10 @@
 ---
 layout: list
-title: Algorithm
-slug: algorithm
+title: Competition
+slug: competition
 menu: true
 submenu: false
 order: 3
 description: >
-  [C++] 알고리즘 풀이
+  참가하였던 공모전에 관한 내용입니다. 
 ---
