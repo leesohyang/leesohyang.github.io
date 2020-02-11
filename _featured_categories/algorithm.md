@@ -6,5 +6,5 @@ menu: true
 submenu: false
 order: 3
 description: >
-  알고리즘 풀이
+  [C++] 알고리즘 풀이
 ---
