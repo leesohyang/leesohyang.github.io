@@ -28,7 +28,7 @@ author:
   email:             dlehfrn96@naver.com
 
 # Fallback image and color
-image:               /assets/img/KakaoTalk_20200110_162846740.jpg
+image:               /assets/img/desk.jpg
 color:               '#2f3438'
 
 # The font used for headings. Expects a string that is a valid CSS font-family value.
