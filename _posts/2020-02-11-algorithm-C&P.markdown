@@ -7,6 +7,9 @@ tags: algorithm language C++
 comments: true
 ---
 
+## 개요
+---
+DFS를 사용한 순열과 조합, 조합(부분집합)중에서도 여러 방법이 있는데 이를 정리하기 위한 포스팅입니다.  
 
 ## 순열 
 ---
@@ -39,7 +42,7 @@ comments: true
 ## 조합
 ---
 
-부분집합과 같은 개념. [1, 3, 7]==[1, 7, 3] ~~부분집합은 조합으로 구하는 방법과 BFS으로 구하는 방법이 있다~~ 
+부분집합과 같은 개념. [1, 3, 7]==[1, 7, 3] ~~부분집합은 조합으로 구하는 방법과 BFS으로 구하는 방법이 있다~~ 가장 큰 차이점은 for문의 유무 이다.
 
     '''c
 	void dfs(int s, int L){
@@ -60,4 +63,31 @@ comments: true
 
     '''
 
+BFS(넓이우선탐색)와 같은 방식으로 부분집합을 구하는 방법은 아래와 같다. 두개의 갈래로 나뉘는데 이는 해당 원소를 사용한다 vs 안한다 를 의미한다. 
+
+	'''c
+	void DFS(int L, int cnt){
+		if(L>pz.size()) return;
+		if(cnt==m){
+			sum=0;
+			for(int i=0; i<hs.size(); i++){
+				int x1=hs[i].first;
+				int y1=hs[i].second;
+				dis=2147000000;
+				for(int j=0; j<m; j++){
+					int x2=pz[ch[j]].first;
+					int y2=pz[ch[j]].second;
+					dis=min(dis, abs(x1-x2)+abs(y1-y2));
+				}
+				sum=sum+dis;
+			}
+			if(sum<res) res=sum;
+		}
+		else{
+			ch[cnt]=L;
+			DFS(L+1, cnt+1);
+			DFS(L+1, cnt);
+		}
+	}
+	'''
 
