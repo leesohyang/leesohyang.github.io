@@ -8,10 +8,10 @@ comments: true
 ---
 
 
-## 프로그래머스 가장 큰 수
+## 정렬함수 sort() custom하기 
 ---
  
-정렬함수 sort() custom하기 
+bool operator return 부분에 **내가 원하는 순서대로** 해주면 된다. a, b가 배열의 앞쪽 원소, 뒤쪽 원소 라고 보면 됨. 
 
     '''c
 
