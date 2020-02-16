@@ -11,7 +11,7 @@ comments: true
 ## 문제
 ---
 
-![screenshot](https://leesohyang.github.io/assets/img/post_img/cache.jpg)
+![screenshot](https://leesohyang.github.io/assets/img/post_img/cache.PNG)
 
 
 ## 코드
