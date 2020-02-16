@@ -1,0 +1,60 @@
+---
+layout: post
+title:  "[카카오]캐시 문제 변형 LRU"
+subtitle:   "[카카오]캐시 문제 변형 LRU"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제
+---
+
+![screenshot](https://leesohyang.github.io/assets/img/post_img/cache.jpg)
+
+
+## 코드
+---
+
+
+    '''c
+	#include<stdio.h>			
+	#include<vector>
+	#include<algorithm>
+	
+	using namespace std;
+	//삽입  정렬  오름차순  
+	int main(){
+	//	freopen("input.txt", "rt", stdin);
+		int n, i, k, j, idx, tmp, ch, b;
+		scanf("%d %d", &ch, &n);
+		vector<int> a(ch);
+		for(i=0;i<n;i++){
+			scanf("%d", &b);
+			idx=-1;
+			for(j=0;j<ch;j++){
+				if(b==a[j]) idx=j;
+			}
+			if(idx>=0){
+				tmp=a[idx];	
+				for(k=idx-1;k>=0;k--){
+					a[k+1]=a[k];
+				}
+				a[0]=tmp;
+			}else if(idx==-1){
+				for(k=ch-2;k>=0;k--){
+					a[k+1]=a[k];
+				}
+				a[0]=b;
+			}	
+		}
+		for(i=0;i<ch;i++){
+			printf("%d ", a[i]);
+		}
+		
+		
+		return 0;
+	}
+    '''
+
