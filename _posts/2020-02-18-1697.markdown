@@ -39,7 +39,6 @@ comments: true
 	
 	void BFS() {
 	   q.push(n);
-	   dist[n] = 0;
 	   ch[n] = 1;
 	 
 	   while (!q.empty()) {
