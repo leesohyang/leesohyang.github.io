@@ -1,0 +1,49 @@
+---
+layout: post
+title:  "[백준]1463번"
+subtitle:   "[백준]1463번"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+
+## 코드
+---
+
+DP문제이다. 조건 주는게 중요하다. -1과 /2, /3 **셋 중에** 제일 작은걸 골라야 한다. 처음에 두번째 조건문을 else if로 줬다가 계속 틀렸었다. 더 작으면 갱신되게끔 다 if로 해줘야 한다. 
+
+    '''c
+	#include <string>
+	#include <vector>
+	#include <algorithm>
+	#include <iostream>
+	#include <fstream>
+	#include <queue>
+	using namespace std;
+	int dy[1000001];
+	
+	int main() {
+	
+		ios_base::sync_with_stdio(false);
+		ifstream cin;
+		int n;
+		cin.open("input.txt");
+		cin >> n;
+	
+		dy[1] = 0;
+		dy[2] = 1;
+		dy[3] = 1;
+		for (int i = 4; i <= n; i++) {
+			dy[i] = dy[i - 1] + 1;
+			if (i % 2 == 0) dy[i] = min(dy[i], dy[i / 2] + 1);
+			if (i % 3 == 0) dy[i] = min(dy[i], dy[i / 3] + 1);	
+			
+		}
+		cout << dy[n];
+	
+		return 0;
+	}
+    '''
+
