@@ -9,7 +9,7 @@ header-img: img/post_img/bert.jpg
 ---
 
 ## 개요
-> 2019년 국어 정보처리 경연대회에 참가하여 bert를 사용한 한국어 개체명 인식 시스템을 구현하고 공부한 내용을 정리한 포스팅입니다. 
+> 2019년 국어 정보처리 경연대회에 참가하여 bert를 사용한 한국어 개체명 인식 시스템을 구현하고 공부한 내용을 정리한 포스팅입니다. 작성중에 있습니다. 
 
 - 목차
 	- [프로젝트의 시작](#프로젝트의-시작)
@@ -110,7 +110,3 @@ BERT의 pretrained model은 ETRI에서 공개한 kobert모델을 사용하였습
 ![screenshot5](https://leesohyang.github.io/assets/img/post_img/ner.PNG)
 
 
-## 결과는...
----
-
-총 9만문장을 train, validation, test 셋으로 나누고, Colab GPU를 사용해 6만 문장을 학습한 결과는 약 76%였습니다. 이는 BERT 모델의 알려진 성능에 비하면 터무니없이 낮은 값이였는데요, 저희는 이것이 ETRI의 tokenizer, pretrained 모델과 파인튜닝 코드의 호환성 문제일 것이라고 결론을 내렸습니다. 
