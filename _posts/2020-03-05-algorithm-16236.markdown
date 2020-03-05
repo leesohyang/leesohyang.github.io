@@ -1,0 +1,112 @@
+---
+layout: post
+title:  "[삼성 SW 역량테스트] 16236"
+subtitle:   "[삼성 SW 역량테스트] 16236"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+객체 좌표 저장용 구조체 만들면 편함.
+
+## 코드
+---
+
+
+
+    '''c
+	#include <iostream>
+	#include<fstream>
+	#include <vector>
+	#include<iostream>
+	#include <algorithm>
+	#include <deque>
+	#include<queue>
+	//#include <bits/stdc++.h> 백준제출용
+	using namespace std;
+	
+	int N, res=0;
+	int board[21][21], ch[21][21];
+	int dir[4][2] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+	struct State {
+	    int x, y, dis;
+	    State(int a, int b, int c) {
+	        x = a;
+	        y = b;
+	        dis = c;
+	    }
+	    bool operator<(const State& bb)const { //최소힙+왼쪽부터 탐색하는거 커스터마이징.
+	        if (dis == bb.dis) {
+	            if (x == bb.x) return y > bb.y;
+	            else return x > bb.x;
+	        }
+	        else return dis > bb.dis;
+	    }
+	};
+	struct Lion { //심바 좌표 저장 이렇게 하면 됨. 참 편하겟네용
+	    int x, y, s, ate;
+	    void Sizeup() {
+	        ate = 0;
+	        s++;
+	    }
+	};
+	 
+	int main(void)
+	{
+	    ios_base::sync_with_stdio(false);
+	    ifstream cin;
+	    priority_queue<State> Q;
+	    cin.open("input.txt");
+	    int a;
+	    cin >> N;
+	    Lion Simba;
+	    for (int i = 0; i < N; i++) {
+	        for (int j = 0; j < N; j++) {
+	            cin >> a;
+	            board[i][j] = a;
+	            if (a == 9) Simba.x = i, Simba.y = j, board[i][j]=0; //이거 중요. 
+	        }
+	    }
+	   
+	    Simba.s = 2;
+	    Simba.ate = 0;
+	    Q.push({ Simba.x, Simba.y, 0 });//여기서부터 탐색 시작하니까 심바 위치 넣어주고
+	
+	    ch[Simba.x][Simba.y] = 1;
+	   
+	    while (!Q.empty()) {
+	        State tmp = Q.top();
+	        Q.pop();
+	        int x = tmp.x;
+	        int y = tmp.y;
+	        int z = tmp.dis;
+	        if (board[x][y] != 0 && board[x][y] < Simba.s) { //작은애만 먹을수있음. 
+	            board[x][y] = 0;
+	            Simba.x = x;
+	            Simba.y = y;
+	            Simba.ate++;
+	            if (Simba.ate == Simba.s) Simba.Sizeup();
+	            res = z;
+	            while (!Q.empty()) Q.pop();
+	
+	            memset(ch, 0, sizeof(ch)); //갔던데 다시 갈 수 있는거지. 아까 커서 못먹었던애 다시 먹으러
+	        }
+	        for (int i = 0; i < 4; i++) {
+	            int xx = x + dir[i][0];
+	            int yy = y + dir[i][1];
+	            if (xx < 0 || xx >= N || yy < 0 || yy >= N || ch[xx][yy] != 0 || board[xx][yy]>Simba.s) continue; //ch배열의 중요성. 
+	            ch[xx][yy] = 1;
+	            Q.push({ xx, yy, z + 1 }); //z는 0부터 쭉 증가
+	        }
+	    }
+	
+	    cout << res;
+	    return 0;
+	
+	}
+    '''
+

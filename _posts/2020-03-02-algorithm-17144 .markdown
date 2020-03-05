@@ -1,0 +1,151 @@
+---
+layout: post
+title:  "[삼성 SW 역량테스트] 17144"
+subtitle:   "[삼성 SW 역량테스트] 17144"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+
+## 코드
+---
+
+
+
+    '''c
+	#include <string>
+	#include <vector>
+	#include <algorithm>
+	#include <iostream>
+	#include <fstream>
+	#include <queue>
+	using namespace std;
+	
+	int map[51][51];
+	
+	int dir[4][2] = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
+	
+	struct State {
+		int x, y, dust_quantity;
+		State(int a, int b, int c) {
+			x = a;
+			y = b;
+			dust_quantity = c;
+		}
+	};
+	int main() {
+	
+		ios_base::sync_with_stdio(false);
+		ifstream cin;
+		vector<State> dust;
+		vector<pair<int, int> > cleaner;
+		cin.open("input.txt");
+		int R, C, T, a;
+		cin >> R >> C >> T;
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				cin >> a;
+				map[i][j] = a;
+				if (a > 0) {
+					dust.push_back({ i, j, a });
+					map[i][j] = 0;
+				}
+				else if (a == -1) {
+					cleaner.push_back({ i, j });
+				}
+			}
+		}
+		
+		while (T--) {
+			int size = dust.size(); //한번만 미세먼지 전체확산 
+			for(int j=0;j<size;j++) {
+				int xx = dust[j].x;
+				int yy = dust[j].y;
+				int quantity= dust[j].dust_quantity;
+		
+				int spread = quantity / 5;
+				int tmp_sum = 0;
+				for (int i = 0; i < 4; i++) {
+					if (xx + dir[i][0] < 0 || yy + dir[i][1] < 0 || xx + dir[i][0] >= R || yy + dir[i][1] >= C || map[xx + dir[i][0]][yy + dir[i][1]]==-1) continue;
+					map[xx + dir[i][0]][yy + dir[i][1]] += spread;
+	
+					tmp_sum += spread;
+				}map[xx][yy] += quantity-tmp_sum;
+			}
+			//밀기
+			for (int Idx = 0; Idx < 2; Idx++)
+			{
+				if (Idx == 0)
+				{
+					// 1. 공기청정기 위에서부터 (0, 0)까지 모든 값 떙겨주기
+					for (int i = cleaner[Idx].first - 1; i > 0; i--)
+					{
+						map[i][0] = map[i - 1][0];
+					}
+					// 2. 가장 윗줄 땡겨주기
+					for (int i = 0; i < C - 1; i++)
+					{
+						map[0][i] = map[0][i + 1];
+					}
+					// 3. 반대편 세로라인 땡겨주기
+					for (int i = 1; i <= cleaner[Idx].first; i++)
+					{
+						map[i - 1][C - 1] = map[i][C - 1];
+					}
+					// 4. 공기청정기 라인 땡겨주기
+					for (int i = C - 1; i > 1; i--)
+					{
+						map[cleaner[Idx].first][i] = map[cleaner[Idx].first][i - 1];
+					}
+					map[cleaner[Idx].first][1] = 0;
+				}
+				else
+				{
+					for (int i = cleaner[Idx].first + 1; i < R - 1; i++)
+					{
+						map[i][0] = map[i + 1][0];
+					}
+					for (int i = 0; i < C - 1; i++)
+					{
+						map[R - 1][i] = map[R - 1][i + 1];
+					}
+					for (int i = R - 1; i >= cleaner[Idx].first; i--)
+					{
+						map[i][C - 1] = map[i - 1][C - 1];
+					}
+					for (int i = C - 1; i > 1; i--)
+					{
+						map[cleaner[Idx].first][i] = map[cleaner[Idx].first][i - 1];
+					}
+					map[cleaner[Idx].first][1] = 0;
+				}
+			}
+		
+			//다시 확산전 초기화
+			while (!dust.empty()) dust.pop_back();
+		
+			for (int i = 0; i < R; i++) {
+				for (int j = 0; j < C; j++) {
+					if (map[i][j] > 0) {
+						dust.push_back({ i, j, map[i][j] });
+						map[i][j] = 0;
+					}
+				}
+			}
+	
+		}
+		int sum = 0;
+		for (int i = 0; i < dust.size(); i++) {
+			sum+=dust[i].dust_quantity;
+		}
+		cout << sum;
+		return 0;
+	}
+
+    '''
+

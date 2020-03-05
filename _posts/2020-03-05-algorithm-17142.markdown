@@ -1,0 +1,114 @@
+---
+layout: post
+title:  "[삼성 SW 역량테스트] 17142"
+subtitle:   "[삼성 SW 역량테스트] 17142"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+**활성 바이러스가 비활성 바이러스가 있는 칸으로 가면 비활성 바이러스가 활성으로 변한다.** 
+
+문제를 제대로 읽자. 제대로읽자. 제대로. 제 대 로 
+
+## 코드
+---
+
+
+
+    '''c
+	#include <iostream>
+	#include<fstream>
+	#include <vector>
+	#include<iostream>
+	#include <algorithm>
+	#include <deque>
+	#include<queue>
+	using namespace std;
+	
+	int N, M;
+	int board[51][51];
+	int dir[4][2] = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
+	int maxsum = 2147000000;
+	vector<pair<int, int> > virus;
+	int res[51];
+	int dis_virus[51][51], ch_virus[51][51];
+	
+	int BFS() { //0에만 확산
+	
+	    queue<pair<int, int> > virus_res;
+	
+	    int maxsum_tmp = 0;
+	    for (int i = 0; i < M; i++) {
+	        virus_res.push({ virus[res[i]].first, virus[res[i]].second });
+	        ch_virus[virus[res[i]].first][virus[res[i]].second] = 1;
+	    }
+	    while (!virus_res.empty()) {
+	        pair<int, int> tmp_virus = virus_res.front();
+	        virus_res.pop();
+	        for (int i = 0; i < 4; i++) {
+	            int xx = tmp_virus.first + dir[i][0];
+	            int yy = tmp_virus.second + dir[i][1];
+	            if (ch_virus[xx][yy] == 0) {
+	                if (xx >= 0 && xx < N && yy >= 0 && yy < N && board[xx][yy]!=1) { //빈칸이거나 바이러스거나
+	                    dis_virus[xx][yy] = dis_virus[tmp_virus.first][tmp_virus.second] + 1;
+	                    ch_virus[xx][yy] = 1;
+	                    virus_res.push({ xx, yy });
+	                }
+	            }
+	           
+	        }
+	    }
+	    bool flag = false;
+	    for (int i = 0; i < N; i++) {
+	        for (int j = 0; j < N; j++) {
+	            if (board[i][j] == 0 && ch_virus[i][j] == 0) flag = true; //확산못한거
+	            else if (board[i][j] == 0 && ch_virus[i][j] != 0) maxsum_tmp = max(maxsum_tmp, dis_virus[i][j]);
+	        }
+	    }
+	    memset(dis_virus, 0, sizeof(dis_virus));
+	    memset(ch_virus, 0, sizeof(ch_virus));
+	    
+	    if (flag) maxsum_tmp = 2147000000;
+	    return maxsum_tmp;
+	}
+	void DFS(int v, int L) {
+	    if (L == M) {
+	        maxsum = min(maxsum, BFS());
+	    }
+	    else {
+	        for (int i = v; i < virus.size(); i++) {
+	            res[L] = i;
+	            DFS(i + 1, L + 1);   
+	        }
+	    }
+	}
+	
+	int main(void)
+	{
+	    ios_base::sync_with_stdio(false);
+	    ifstream cin;
+	    cin.open("input.txt");
+	    int a;
+	    cin >> N >> M;
+	
+	    for (int i = 0; i < N; i++) {
+	        for (int j = 0; j < N; j++) {
+	            cin >> a;
+	            board[i][j] = a;
+	            if (a == 2) virus.push_back({ i, j });
+	        }
+	    }
+	 
+	    DFS(0, 0);
+	    if (maxsum == 2147000000) maxsum = -1;
+	    cout << maxsum;
+	    return 0;
+	
+	}
+    '''
+
