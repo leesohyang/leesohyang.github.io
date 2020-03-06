@@ -1,0 +1,68 @@
+---
+layout: post
+title:  "[삼성 a형 기출] 16637 괄호 넣기"
+subtitle:   "[삼성 a형 기출] 16637"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+제일 기억에 남는 문제이다.
+
+for문 재귀가 아닌 **괄호 사용X vs 괄호 사용O** 이 두가지로 뻗어나가는 재귀를 사용하면 된다. 재귀 사용 방법은 이렇게 크게 두가지가 있는듯. 
+{1, 2, 3, 4, 5} 집합의 부분집합을 모두 구하는것과 같은 원리이다. 2칸, 4칸씩 뭉치로 움직이는것 뿐이다. 
+## 코드
+---
+
+
+
+    '''c
+	#include <iostream>
+	#include<fstream>
+	#include <vector>
+	#include<iostream>
+	#include <algorithm>
+	#include <deque>
+	#include<queue>
+	//#include <bits/stdc++.h> 백준제출용
+	using namespace std;
+	
+	int N, res=0;
+	string s;
+	int maxin = -2147000000;
+	int cnt(char oper, int a, int b) {
+	    if (oper == '*') return a * b;
+	    else if (oper == '+') return a + b;
+	    else if (oper == '-') return a - b;
+	}
+	void DFS(int v, int num) {
+	    if (v == N) {
+	        maxin = max(maxin, num);
+	        return;
+	    }
+	    int next_num = s[v + 1] - '0';
+	    DFS(v + 2, cnt(s[v], num, next_num));
+	    if (v == N - 2) return;
+	    DFS(v + 4, cnt(s[v], num, cnt(s[v + 2], next_num, s[v + 3] - '0')));
+	}
+	int main(void)
+	{
+	    ios_base::sync_with_stdio(false);
+	    ifstream cin;
+	
+	    cin.open("input.txt");
+	    int a;
+	    
+	    cin >> N;
+	    cin >> s;
+	    DFS(1, s[0] - '0'); //연산자, 연산자 앞숫자. 
+	    cout<<maxin;
+	    return 0;
+	
+	}
+    '''
+
