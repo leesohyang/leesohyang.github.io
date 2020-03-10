@@ -1,0 +1,138 @@
+---
+layout: post
+title:  "[삼성 a형 기출] 17135"
+subtitle:   "[삼성 a형 기출] 17135"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+우선순위 큐는 뽑을때 top 이다..꼭 기억하자...  이거 까먹어서 두시간 날렸다 흑흑. 
+다른 궁수가 죽인애는 배열에서 2로 표시하고, 아직 안죽은 애는 1로, 1을 공격했을 시에만 카운트 처리하면 된다.
+2는 한 턴이 끝날때 0으로 처리해주면 된다. 
+
+## 코드
+---
+
+
+
+    '''c
+	#include <iostream>
+	#include<fstream>
+	#include <vector>
+	#include<iostream>
+	#include <algorithm>
+	#include <deque>
+	#include<queue>
+	//#include <bits/stdc++.h> 백준제출용
+	using namespace std; //위, 아래 순
+	int board[20][20], ch[20][20];
+	int N, M, D;
+	int res[3];
+	int max_sum=0;
+	
+	struct prior {
+	    int x, y, dis;
+	    prior(int a, int b, int c) {
+	        x = a;
+	        y = b;
+	        dis = c;
+	    }
+	    bool operator<(const prior& bb)const {
+	        if (dis == bb.dis) {
+	            return y > bb.y;
+	      
+	        }
+	        else return dis > bb.dis; //최소힙 
+	    }
+	};
+	int attack() {
+	    
+	    int sum = 0;
+	    while(1){
+	        bool flag = false;
+	  
+	        for (int k = 0; k < 3; k++) {
+	            priority_queue<prior> me;
+	            for (int i = 0; i < N; i++) {
+	                for (int j = 0; j < M; j++) {
+	                    if (board[i][j] != 0) {
+	                        flag = true;
+	                        
+	                        int tmp_dis = abs(N - i) + abs(res[k] - j); //N, res[k] =궁수위치. 
+	                        if (tmp_dis > D) continue;
+	                    
+	                        me.push({ i, j, tmp_dis });
+	                    }
+	                }
+	            }
+	            if (!flag) {
+	                
+	                return sum;
+	            }//적 없으면 종료
+	            if (!me.empty()) { //공격할수있으면 
+	                prior tmp = me.top();
+	                me.pop(); 
+	                if (board[tmp.x][tmp.y] == 1) { //아직 안죽인경우만  
+	                    sum++;
+	                    board[tmp.x][tmp.y] = 2;
+	                }
+	            }
+	           
+	        }
+	        //한턴씩 하고
+	        //board배열 밀기  
+	        for (int i = N-1; i >= 0; i--) {
+	            for (int j = 0; j < M; j++) {
+	                if (i == 0) board[i][j] = 0;
+	                else board[i][j] = board[i - 1][j];
+	                
+	                if (board[i][j] == 2) board[i][j] = 0;
+	            }
+	        }
+	        
+	    }
+	
+	    
+	}
+	void DFS(int v, int L) {
+	    if (L == 3) { //궁수 배치 되면 공격
+	        max_sum=max(max_sum, attack());
+	        for (int i = 0; i < N; i++) {
+	            for (int j = 0; j < M; j++) {
+	                board[i][j] = ch[i][j];
+	            }
+	        }
+	    }
+	    else {
+	        for (int i = v; i < M; i++) {
+	            res[L] = i;
+	            DFS(i+1, L + 1);
+	        }
+	    }
+	}
+	int main(void)
+	{
+	    ios_base::sync_with_stdio(false);
+	    ifstream cin;
+	   
+	    cin.open("input.txt");
+	    cin >> N >> M >> D;
+	    
+	    for (int i = 0; i < N; i++) {
+	        for (int j = 0; j < M; j++) {
+	            cin >> board[i][j];
+	            ch[i][j] = board[i][j];
+	        }
+	    }
+	    DFS(0, 0);
+	    cout << max_sum;
+	    return 0;
+	
+	}
+    '''
+
