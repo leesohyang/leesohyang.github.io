@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "[삼성 SW 역량테스트] 2146"
-subtitle:   "[삼성 SW 역량테스트] 2146"
+title:  "[삼성 SW 역량테스트] 17472"
+subtitle:   "[삼성 SW 역량테스트] 17472"
 categories: algorithm language 
 tags: algorithm language C++
 comments: true
@@ -10,7 +10,7 @@ comments: true
 
 ## 문제 
 ---
-다리만들기 문제.
+다리만들기2 문제.
 
 가능한 모든 다리를 만들어놓고(조합 필요없음)
 최소스패닝트리 알고리즘 적용하면 된다.
