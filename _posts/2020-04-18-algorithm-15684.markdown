@@ -1,0 +1,144 @@
+---
+layout: post
+title:  "[삼성 SW 역량테스트] 15684"
+subtitle:   "[삼성 SW 역량테스트] 15684"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+<https://www.acmicpc.net/status?user_id=dlehfrn96&problem_id=15684&from_mine=1> 사다리 조작
+
+내가 완전 약한 완전탐색 문제이다. 개인적으로 완전탐색에서 쓰는 DFS가 제일 어렵다. ~~기본기가 탄탄하지 못해서 그럼... 원래 완탐이 젤 쉬워야 하는거 아닌가~~
+
+놓친 것 1. **만약, 정답이 3보다 큰 값이면 -1을 출력한다. 또, 불가능한 경우에도 -1을 출력한다.** 그니까 사다리 0개 놓는 경우, 한개 놓는경우, 두개 놓는경우, 세개 놓는 경우 각각 DFS를 돌리는 것이다. 
+
+놓친 것 2. 사다리를 어떻게 놓고, 어떻게 탈 것인가? bool 2차원배열로 체크 하면서 놓으면 된다.
+
+놓친 것 3. for (int j = 1; j < N; i++) <<< ㅎ.. 이상하게 무한루프를 돌때는.. 포문부터 다시 보자,,, 
+
+## 코드
+---
+
+
+
+    '''c
+	#include <string>
+	#include <vector>
+	#include <algorithm>
+	#include <iostream>
+	#include <fstream>
+	#include <queue>
+	
+	//#include <bits/stdc++.h>
+	
+	//브루트 포스 알고리즘
+	
+	using namespace std;
+	
+	
+	
+	const int MAX = 30;
+	
+	
+	
+	int N, M, H;
+	
+	int ladder_cnt;
+	
+	bool flag;
+	
+	bool ladder[MAX][9 + 2];
+	
+	void DFS(int y, int cnt) {
+	
+		if (flag) 
+				return;
+		if(ladder_cnt == cnt){ //되는지 확인해보기
+			bool possible = true;
+			for (int i = 1; i <= N; i++) {
+				int row = i;
+				for (int j = 0; j < H; j++) {
+					if (ladder[j][row]) row++; //오른쪽 사다리 타는 경우
+					else if (row > 1 && ladder[j][row - 1]) row--;
+				}
+				if (i != row) {
+					possible = false;
+					break;
+				}
+			}
+			//다 돌았는데 아직도 possible이면 flag를 트루
+			if (possible) {
+				flag = true;
+			}
+		}
+		
+		else {
+			for (int i = y; i < H; i++)  //사다리 하나씩 놔보기 아 맞네 사다리 이렇게 들어가야되네 
+				for (int j = 1; j < N; j++)
+					if (!ladder[i][j - 1] && !ladder[i][j] && !ladder[i][j + 1]) { //또라이뇬아,,
+						ladder[i][j] = true;
+						DFS(i, cnt + 1);
+						ladder[i][j] = false;
+	
+					}
+	
+		}
+	}
+	int main(void) {
+	
+		ios_base::sync_with_stdio(0);
+	
+		cin.tie(0);
+		ifstream cin;
+		cin.open("input.txt");
+		cin >> N >> M >> H;
+	
+	
+	
+		for (int i = 0; i < M; i++)
+	
+		{
+	
+			int y, x;
+	
+			cin >> y >> x;
+	
+			//(y-1)번째 col에서 x ~ (x+1)를 이어주는 사다리
+	
+			ladder[y - 1][x] = true;
+	
+		}
+	
+	
+	
+		for (int i = 0; i <= 3; i++)
+	
+		{
+	
+			ladder_cnt = i;
+	
+			DFS(0, 0);
+	
+			if (flag)
+	
+			{
+	
+				cout << ladder_cnt << "\n";
+	
+				return 0;
+	
+			}
+	
+		}
+	
+		cout << -1 << "\n";
+	
+		return 0;
+	}
+    '''
+
