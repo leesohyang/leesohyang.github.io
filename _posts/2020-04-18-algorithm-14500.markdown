@@ -1,0 +1,105 @@
+---
+layout: post
+title:  "[삼성 SW 역량테스트] 14500"
+subtitle:   "[삼성 SW 역량테스트] 14500"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+<https://www.acmicpc.net/submit/14500/19235471> 테트로미노
+
+예전에 문제보고 짜증나서 틀린채로 넘어갔던 문제이다. 
+완전탐색이고,,, 생각보다 쉬운 문제였다. 일단 뻐큐모양 빼고는 4블럭짜리 DFS로 모두 구현이 가능하다.(회전이고 대칭이고 고려할 필요가 없다는 뜻. 머리가 좋아야 몸이 덜 고생함 ㄹㅇ...이거 좌표로 다 찍고있을뻔 했다. 문제에 속지말자ㅠㅠ) 
+
+뻐큐는 dir_fuck로 좌표를 일일이 찍어줬다. 네개밖에 안됨. 
+
+
+## 코드
+---
+
+
+
+    '''c
+	#include <string>
+	#include <vector>
+	#include <algorithm>
+	#include <iostream>
+	#include <fstream>
+	#include <queue>
+	
+	//#include <bits/stdc++.h>
+	
+	//브루트 포스 알고리즘
+	
+	using namespace std;
+	
+	const int MAX = 501;
+	int N, M, ans = 0, ans_fuck = 0, real_ans = 0, answer = 0;
+	int board[MAX][MAX], ch[MAX][MAX];
+	int dir_fuck[4][3][2] = { {{0, -1}, {0, 1}, {-1, 0}}, {{0, -1}, {0, 1}, {1, 0}}, {{0, -1}, {-1, 0}, {1, 0}}, {{-1, 0}, {1, 0}, {0, 1}} };
+	int dir[4][2] = { {0, 1}, {0, -1}, {1, 0}, {0, -1} };
+	void DFS(int v, int x, int y, int sum) {
+		if (v == 3) {
+			ans = max(ans, sum);
+		}
+		else {
+			for (int i = 0; i < 4; i++) {
+				int xx = x + dir[i][0];
+				int yy = y + dir[i][1];
+				if (xx < 0 || xx >= N || y < 0 || y >= M || ch[xx][yy]==1) continue;
+				ch[xx][yy] = 1;
+				DFS(v + 1, xx, yy, sum+board[xx][yy]);
+				ch[xx][yy] = 0;
+			}
+		}
+	}
+	void DFS_FUCK(int x, int y) {
+	
+	
+		for (int i = 0; i < 4; i++) {
+			int sum = board[x][y];
+			for (int j = 0; j < 3; j++) {
+				int xx = x + dir_fuck[i][j][0];
+				int yy = y + dir_fuck[i][j][1];
+				if (xx < 0 || xx >= N || y < 0 || y >= M) continue;
+				sum += board[xx][yy];
+			}
+			ans_fuck = max(ans_fuck, sum);
+			
+		}
+	}
+	int main(void) {
+	
+		ios_base::sync_with_stdio(0);
+	
+		cin.tie(0);
+		ifstream cin;
+		cin.open("input.txt");
+		cin >> N >> M;
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				cin >> board[i][j];
+			}
+		}
+	
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				ch[i][j] = 1;
+				DFS(0, i, j, board[i][j]);
+				ch[i][j] = 0;
+				DFS_FUCK(i, j);
+				real_ans = max(ans, ans_fuck);
+				answer = max(answer, real_ans);
+			}
+		}
+	
+		cout << answer;
+		return 0;
+	}
+    '''
+
