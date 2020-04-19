@@ -41,7 +41,7 @@ comments: true
 	const int MAX = 501;
 	int N, M, ans = 0, ans_fuck = 0, real_ans = 0, answer = 0;
 	int board[MAX][MAX], ch[MAX][MAX];
-	int dir_fuck[4][3][2] = { {{0, -1}, {0, 1}, {-1, 0}}, {{0, -1}, {0, 1}, {1, 0}}, {{0, -1}, {-1, 0}, {1, 0}}, {{-1, 0}, {1, 0}, {0, 1}} };
+	int dir_fuck[4][3][2] = { { {0, -1}, {0, 1}, {-1, 0}}, {{0, -1}, {0, 1}, {1, 0}}, {{0, -1}, {-1, 0}, {1, 0}}, {{-1, 0}, {1, 0}, {0, 1} } };
 	int dir[4][2] = { {0, 1}, {0, -1}, {1, 0}, {0, -1} };
 	void DFS(int v, int x, int y, int sum) {
 		if (v == 3) {
