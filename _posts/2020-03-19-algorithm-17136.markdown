@@ -1,0 +1,125 @@
+---
+layout: post
+title:  "[삼성 a형 기출] 17136"
+subtitle:   "[삼성 a형 기출] 17136"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+<https://www.acmicpc.net/problem/17136> 색종이 붙이기 
+
+DFS 가지치기가 중요하다. 현재 min보다 커지면 더 볼 필요 없이 return 하면 된다.
+
+## 코드
+---
+
+
+
+    '''c
+	#include <bits/stdc++.h> 
+	using namespace std;
+	const int MAX = 10;
+	
+	int min_ans, total_cnt;
+	int paper_cnt[5] = { 0,0,0,0,0 };
+	int board[MAX][MAX];
+	
+	bool can_attach_paper(int x, int y, int size)
+	{
+		int i, j;
+		for (i = 0; i < size; ++i)
+		{
+			for (j = 0; j < size; ++j)
+				if (!board[x + i][y + j])
+					return false;
+		}
+		return true;
+	}
+	
+	void update_paper(int x, int y, int size, bool is_attach)
+	{
+		int i, j;
+		for (i = 0; i < size; ++i)
+			for (j = 0; j < size; ++j)
+				board[x + i][y + j] = is_attach;
+	}
+	
+	void dfs(int x, int y, int attach_cnt)
+	{
+		// 1. 1을 찾을 때까지 증가 여기가 굉장히 인상깊음. 
+		while (board[x][y] == 0)
+		{
+	        y++;
+			if (y >= MAX) //먼저 증가 ++y가 좋네
+			{
+	            x++;
+				if (x >= MAX)
+				{
+					min_ans = min(min_ans, attach_cnt);
+					return;
+				}
+				y = 0;
+			}
+		}
+	
+		// 가지 치기 min보다 커지면 쓸데없이 연산 안하도록. 
+		if (min_ans <= attach_cnt)
+			return;
+	
+		// 2. 모든 크기를 시도 (5,4,3,2,1)
+		for (int s = 5; s > 0; --s)
+		{
+			// 범위 벗어남, 남은 종이 없음
+			if (x + s > MAX || y + s > MAX || paper_cnt[s] == 5) continue;
+	
+			// 3. 색종이 부착 시도
+			if (can_attach_paper(x, y, s))
+			{
+				// 4. 부착
+				update_paper(x, y, s, 0);
+				++paper_cnt[s];
+				dfs(x, y, attach_cnt + 1);
+	
+				// 5. 제거
+				update_paper(x, y, s, 1);
+				--paper_cnt[s];
+			}
+		}
+	}
+	
+	
+	int main(void)
+	{
+	    ios_base::sync_with_stdio(false);
+	
+	
+		min_ans = 987654321;
+		int i, j;
+		for (i = 0; i < MAX; ++i)
+		{
+			for (j = 0; j < MAX; ++j)
+			{
+				cin >> board[i][j];
+				if (board[i][j]) ++total_cnt;
+			}
+		}
+		if (total_cnt == MAX * MAX)
+		{
+			cout << 4;
+			return 0;
+		}
+	
+		dfs(0, 0, 0);
+		if (min_ans == 987654321) min_ans = -1;
+		cout << min_ans;
+		return 0;
+	
+	
+	}
+    '''
+
