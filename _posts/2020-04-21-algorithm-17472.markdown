@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "[삼성 SW 역량테스트] 17472"
-subtitle:   "[삼성 SW 역량테스트] 17472"
+title:  "[삼성 a형 기출] 17472"
+subtitle:   "[삼성 a형 기출] 17472"
 categories: algorithm language 
 tags: algorithm language C++
 comments: true
