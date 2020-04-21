@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[삼성 a형 기출] 17472"
+title:  "[삼성 SW 역량테스트] 17472"
 subtitle:   "[삼성 SW 역량테스트] 17472"
 categories: algorithm language 
 tags: algorithm language C++
@@ -10,11 +10,14 @@ comments: true
 
 ## 문제 
 ---
-다리만들기2 문제.
 
-가능한 모든 다리를 만들어놓고(조합 필요없음)
-최소스패닝트리 알고리즘 적용하면 된다.
- 
+<https://www.acmicpc.net/problem/17472> 다리만들기2
+
+1. 가능한 다리를 모두 만들고(최솟값으로)
+2. union&find MST를 사용한다.
+
+다리를 만들 두 섬을 구하는건 따로 DFS조합이 필요없다. 그냥 이중포문 돌리면 된다. 
+그리고... int DFS함수에서... 모든경우에 return 이 있어야한다. void DFS만 쓰다가 int DFS 쓰니까 DFS새로 부를때 return DFS 안해고 그냥 DFS()로 재귀 호출해서 런타임에러 계속 났다. ㅠㅠ 악. 
 
 ## 코드
 ---
@@ -22,14 +25,7 @@ comments: true
 
 
     '''c
-	#include <iostream>
-	#include<fstream>
-	#include <vector>
-	#include<iostream>
-	#include <algorithm>
-	#include <deque>
-	#include<queue>
-	//#include <bits/stdc++.h> 백준제출용
+	#include <bits/stdc++.h>
 
 	using namespace std;
 	#define INF 1000
@@ -40,7 +36,7 @@ comments: true
 	int board[MAX][MAX], ch[MAX][MAX];
 	int N, M, ans;
 	int dir[4][2] = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
-	
+	int tmp_ans= INF;
 	vector<pair<int, int> > Area_Pos[7];
 	int name = 1;
 	
@@ -57,6 +53,9 @@ comments: true
 	    }
 	};
 	
+	
+	
+	
 	int Find(int x)
 	{
 	    if (unf[x] == x) return x;
@@ -71,45 +70,40 @@ comments: true
 	    if (xx != yy) unf[xx] = yy; // 부모가 다르면-> 부모 체인지 
 	
 	}
-	int getDistanceBetweenTwoPoints(int number, int fixed, int x1, int y1) { //점끼리의 거리 
-	    if (y1 > x1) {
-	        int temp = y1; y1 = x1; x1 = temp;
-	    }
+
 	
-	    for (int i = y1 + 1; i < x1; i++) {
-	        if (number == 0 && board[fixed][i] != 0) return INF;  //점과 점 사이에 바다가 아니라 섬이 있는 경우. 
-	        else if (number == 1 && board[i][fixed] != 0) return INF;
+	int DFS(int x, int y, int d, int cnt, int arr) {
+	    
+	    int nx = x + dir[d][0];
+	    int ny = y + dir[d][1];
+	    if (nx < 0 || nx >= N || ny < 0 || ny >= M)  return INF;
+	    if (board[nx][ny] == 0) return DFS(nx, ny, d, cnt + 1, arr);
+	    else if (board[nx][ny] != 0 && board[nx][ny] == arr && cnt > 1) {
+	        
+	         return cnt;
+	       
 	    }
-	
-	    return x1 - y1 - 1;
-	}
-	
-	int getDistance(vector<pair<int, int> >  v1, vector<pair<int, int> > v2) { // 섬끼리의 거리 
-	    int res = INF;
-	    for (int i = 0; i < v1.size(); i++) {
-	        for (int j = 0; j < v2.size(); j++) {
-	            if (v1[i].first == v2[j].first) {
-	                int dis = getDistanceBetweenTwoPoints(0, v1[i].first, v1[i].second, v2[j].second); //row는 같고 col이 다름
-	                if (dis > 1) res = min(res, dis);
-	            }
-	            if (v1[i].second == v2[j].second) {
-	                int dis = getDistanceBetweenTwoPoints(1, v1[i].second, v1[i].first, v2[j].first); // col이 같고 row가 다름
-	                if (dis > 1) res = min(res, dis);
-	            }
-	        }
-	    }
-	    if (res != INF) return res;
 	    else return INF;
 	}
+	int getDistance_DFS(vector<pair<int, int> >  v1, int arrive) {
 	
+	    int dist_tmp = INF;
+	    for (int i = 0; i < v1.size(); i++) {
+	        int x = v1[i].first;
+	        int y = v1[i].second;
+	        for (int j = 0; j < 4; j++) {
+	            dist_tmp = min(DFS(x, y, j, 0, arrive), dist_tmp);  
+	        }
+	        
+	    }
+	    if (dist_tmp != INF) return dist_tmp;
+	    else return INF;
+	}
 	
 	int main(void)
 	{
 	    ios_base::sync_with_stdio(false);
-	    ifstream cin;
 	
-	
-	    cin.open("input.txt");
 	    cin >> N >> M;
 	    for (int i = 0; i < N; i++) {
 	        for (int j = 0; j < M; j++) {
@@ -147,14 +141,16 @@ comments: true
 	
 	    vector<Bridge> Node;
 	
-	    for (int i = 1; i < name; i++) {   //만들수있는 다리 무조건 다놓기
+	    for (int i = 1; i < name; i++) {
 	        for (int j = i + 1; j < name; j++) {
-	
-	
-	            int dist = getDistance(Area_Pos[i], Area_Pos[j]);
+	            
+	            int dist = getDistance_DFS(Area_Pos[i], j);
+	            //int dist = getDistance(Area_Pos[i], Area_Pos[j]); //dist= 섬간의 최소거리
+	           
 	            if (dist != INF) Node.push_back({ i, j, dist });
 	
 	        }
+	       
 	    }
 	    //위에꺼 한 다음에 union&find 최소스패닝트리
 	    sort(Node.begin(), Node.end()); //이게 안되나? 왜 구조체하면 sort안되지 
