@@ -1,0 +1,113 @@
+---
+layout: post
+title:  "[삼성 SW 역량테스트] 14503"
+subtitle:   "[삼성 SW 역량테스트] 14503"
+categories: algorithm language 
+tags: algorithm language C++
+comments: true
+---
+
+
+## 문제 
+---
+
+<https://www.acmicpc.net/problem/14503> 로봇 청소기
+
+
+<img src = "https://leesohyang.github.io/assets/img/post_img/cleaner.PNG" style="max-width: 100%; height: auto;">
+
+
+
+
+## 코드
+---
+
+
+
+    '''c
+	#include <iostream>
+	#include<fstream>
+	#include <vector>
+	#include<iostream>
+	#include <algorithm>
+	#include <deque>
+	#include<queue>
+	//#include <bits/stdc++.h>
+	
+	using namespace std;
+	#define INF 1000
+	#define MAX 51
+	
+	
+	int board[MAX][MAX], ch[MAX][MAX];
+	int N, M, ans=1;
+	int tmp = 0;
+	int dir[4][2] = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };
+	struct cleaner {
+	    int x, y, d;
+	};
+	int main(void)
+	{
+	    ios_base::sync_with_stdio(false);
+	    ifstream cin;
+	    cin.open("input.txt");
+	    cin >> N >> M;
+	    cleaner X;
+	    cin >> X.x >> X.y >> X.d;
+	    for (int i = 0; i < N; i++) {
+	        for (int j = 0; j < M; j++) {
+	            cin >> board[i][j];
+	        }
+	    }
+	    ch[X.x][X.y] = 1; //내가 지금 있는 곳 청소
+	
+	    while (1) { //갈때 없을때까지 청소 시작
+	        
+	        
+	        if (ch[X.x][X.y] == 0) { ch[X.x][X.y] = 1; ans++; } //현재위치 청소
+	        
+	        if (tmp == 4) {
+	            tmp = 0;
+	            int d = (X.d + 2) % 4;
+	            int nx = X.x + dir[d][0];
+	            int ny = X.y + dir[d][1];
+	            if (nx>=0 && nx < N && ny>=0 && ny <M && board[nx][ny] != 1) {
+	                X.x = nx;
+	                X.y = ny;
+	            }//뒤 잇으면 후진
+	            else break;
+	        }
+	        int xx, yy;
+	        if (X.d >= 1) {
+	            xx = X.x + dir[X.d - 1][0]; //고개를 돌리고!
+	            yy = X.y + dir[X.d - 1][1];
+	        }
+	        else {
+	            xx = X.x + dir[3][0];
+	            yy = X.y + dir[3][1];
+	        }
+	        if (xx >= 0 && xx < N && yy >= 0 && yy < M && board[xx][yy]==0 && ch[xx][yy] == 0) {
+	            ch[xx][yy] = 1;
+	            ans++;
+	            tmp = 0;
+	            if (X.d >= 1) X.d -= 1;
+	            else X.d = 3;
+	            X.x = xx;
+	            X.y = yy;
+	            continue;
+	        }
+	
+	        if (xx < 0 || xx >= N || yy < 0 || yy >= M || board[xx][yy] != 0 || ch[xx][yy] == 1) { //빠꾸먹은 횟수 저장
+	            if (X.d >= 1) X.d -= 1;
+	            else X.d = 3;
+	            tmp++;
+	            continue;
+	        }
+	       
+	    }
+	    cout << ans;
+	
+	    return 0;
+	}
+    '''
+
