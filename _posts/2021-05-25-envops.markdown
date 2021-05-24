@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "minikube 를 사용한 kubeflow 설치"
+subtitle:   "reference"
+categories: envops
+tags: envops
+comments: true
+---
+
+
+## 
+test 중입니다~
